@@ -5,23 +5,23 @@ import { useReveal } from "@/hooks/useReveal";
 const signals = [
   {
     id: "01",
-    title: "MEMÓRIA CONTINUA",
-    body: "não termina quando acaba.",
+    title: "MEMÓRIA CONTÍNUA",
+    body: "A história da cena não desaparece quando a noite termina.",
   },
   {
     id: "02",
     title: "PRESENÇA REGISTRADA",
-    body: "o que acontece não desaparece mais no silêncio.",
+    body: "Eventos, artistas e projetos permanecem acessíveis para quem chega depois.",
   },
   {
     id: "03",
     title: "ARQUIVO EM FORMAÇÃO",
-    body: "não está pronto. está acontecendo.",
+    body: "Mais que um arquivo, estamos construindo um ponto de encontro para a comunidade.",
   },
   {
     id: "04",
     title: "CONEXÕES INVISÍVEIS",
-    body: "tudo que estava espalhado começa a se reconhecer.",
+    body: "Bandas, DJs, produtores, criadores e a comunidade começam a se encontrar.",
   },
 ];
 
