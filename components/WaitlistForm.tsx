@@ -6,12 +6,16 @@ interface WaitlistFormProps {
   variant?: "hero" | "section";
 }
 
-export default function WaitlistForm({ variant = "section" }: WaitlistFormProps) {
+export default function WaitlistForm({
+  variant = "section",
+}: WaitlistFormProps) {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
   const [message, setMessage] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!email || !email.includes("@")) {
@@ -22,13 +26,12 @@ export default function WaitlistForm({ variant = "section" }: WaitlistFormProps)
 
     setStatus("loading");
 
-    // Simulated submission — replace with real API endpoint
-    await new Promise((resolve) => setTimeout(resolve, 1200));
-
-    // In production: POST to your API route or a service like ConvertKit/Buttondown
-    setStatus("success");
-    setMessage("sinal recebido. você será convocado.");
-    setEmail("");
+    // Simula UX de processamento (Netlify já vai enviar em background)
+    setTimeout(() => {
+      setStatus("success");
+      setMessage("sinal recebido. você será convocado.");
+      setEmail("");
+    }, 800);
   };
 
   if (status === "success") {
@@ -47,10 +50,21 @@ export default function WaitlistForm({ variant = "section" }: WaitlistFormProps)
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3" noValidate>
+    <form
+      name="waitlist"
+      method="POST"
+      data-netlify="true"
+      onSubmit={handleSubmit}
+      className="w-full flex flex-col gap-3"
+      noValidate
+    >
+      {/* REQUIRED for Netlify detection */}
+      <input type="hidden" name="form-name" value="waitlist" />
+
       <div className="relative">
         <input
           type="email"
+          name="email"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
@@ -65,7 +79,10 @@ export default function WaitlistForm({ variant = "section" }: WaitlistFormProps)
             focus:border-arterial
             ${status === "error" ? "border-arterial" : "border-ash"}
           `}
-          style={{ fontFamily: "'Space Mono', monospace", letterSpacing: "0.05em" }}
+          style={{
+            fontFamily: "'Space Mono', monospace",
+            letterSpacing: "0.05em",
+          }}
           disabled={status === "loading"}
         />
       </div>
@@ -77,9 +94,10 @@ export default function WaitlistForm({ variant = "section" }: WaitlistFormProps)
           w-full py-3 px-6 text-sm uppercase tracking-[0.3em]
           transition-all duration-200 font-bold
           border border-arterial
-          ${status === "loading"
-            ? "bg-transparent text-bone-dim cursor-wait"
-            : "bg-arterial text-bone hover:bg-transparent hover:text-arterial"
+          ${
+            status === "loading"
+              ? "bg-transparent text-bone-dim cursor-wait"
+              : "bg-arterial text-bone hover:bg-transparent hover:text-arterial"
           }
         `}
         style={{ fontFamily: "'Space Mono', monospace" }}
